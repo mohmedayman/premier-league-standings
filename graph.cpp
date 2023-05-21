@@ -1,6 +1,10 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <chrono>
+#include <iomanip>
+#include <sstream>
+#include <iostream>
 
 #include "team.hpp"
 #include "graph.hpp"
@@ -11,7 +15,6 @@ void Graph::add_match(std::vector<std::string> row,int limit,int date)
 {
 
     int week = std::stoi(row[0]);
-    int matchdate;
     if(limit>0){
         if(week <= limit){
             auto home = this->add_team((std::string)row[2]);
@@ -23,12 +26,17 @@ void Graph::add_match(std::vector<std::string> row,int limit,int date)
             }
         }
     }else if(date >0){
+        
         std::tm tm = {};
         std::istringstream iss((std::string)row[1]);
         iss >> std::get_time(&tm, "%d/%m/%Y");
-        matchdate = std::mktime(&tm);
-
-        if(matchdate<= date){
+        std::time_t matchdate = std::mktime(&tm);
+        if (iss.fail())
+        {
+            throw std::runtime_error{"failed to parse time string"};
+        }
+        
+        if(matchdate <= date){
             auto home = this->add_team((std::string)row[2]);
             auto away = this->add_team((std::string)row[3]);
             if (row[4] != "-")

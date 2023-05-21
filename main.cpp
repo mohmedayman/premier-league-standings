@@ -8,29 +8,12 @@
 #include "hydrator.hpp"
 #include "standing.hpp"
 #include "team.hpp"
-struct sortv
-{
-    inline bool operator()(Standing *s1, Standing *s2)
-    {
-        if (s1->getPoints() == s2->getPoints())
-        {
-            if (s1->getGoalDiff() == s2->getGoalDiff())
-            {
-                if (s1->getGoalsScored() == s2->getGoalsScored())
-                {
-                    return s1->team.getTitle() < s2->team.getTitle();
-                }
-                return s1->getGoalsScored() > s2->getGoalsScored();
-            }
-            return s1->getGoalDiff() > s2->getGoalDiff();
-        }
+#include "sort_vector.hpp"
 
-        return s1->getPoints() > s2->getPoints();
-    }
-};
 int main(int argc, char const *argv[])
 {
-    int num = -1,intDate=0;
+    int num = -1;
+    std::time_t intDate = 0;
     std::string date;
     for (int i = 1; i < argc; i++)
     {
@@ -40,7 +23,7 @@ int main(int argc, char const *argv[])
             break;
         }else if(!strcmp(argv[i], "-d")){
             date = argv[i+1];
-            //strcpy(date,argv[i+1]);
+
             std::tm tm = {};
             std::istringstream iss(date);
             iss >> std::get_time(&tm, "%d/%m/%Y");
