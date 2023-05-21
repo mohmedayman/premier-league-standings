@@ -5,7 +5,7 @@
 #include <iostream>
 #include "team.hpp"
 
-Match::Match(Team *homeT, Team *awayT, int homeGoals, int awayGoals, std::string date, int week)
+Match::Match(Team *homeT, Team *awayT, int homeGoals, int awayGoals, int week)
 {
     this->homeTeam = homeT;
     this->awayTeam = awayT;
@@ -16,12 +16,6 @@ Match::Match(Team *homeT, Team *awayT, int homeGoals, int awayGoals, std::string
         this->points = 3;
     else if (homeGoals == awayGoals)
         this->points = 1;
-
-    std::tm tm = {};
-    std::istringstream iss(date);
-    iss >> std::get_time(&tm, "%d/%m/%Y");
-
-    this->date = std::mktime(&tm);
 }
 
 std::vector<Team *> Match::teams(){

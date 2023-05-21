@@ -11,22 +11,26 @@
 #include "match.hpp"
 
 Graph::Graph(){};
-void Graph::add_match(std::vector<std::string> row,int limit,int date)
+void Graph::add_match(std::vector<std::string> row, int limit, int date)
 {
 
     int week = std::stoi(row[0]);
-    if(limit>0){
-        if(week <= limit){
+    if (limit > 0)
+    {
+        if (week <= limit)
+        {
             auto home = this->add_team((std::string)row[2]);
             auto away = this->add_team((std::string)row[3]);
             if (row[4] != "-" || row[5] != "-" || row[6] != "-")
             {
-                auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]), (std::string)row[1], std::stoi(row[0]));
+                auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]),std::stoi(row[0]));
                 this->edges[home].push_back(m);
             }
         }
-    }else if(date >0){
-        
+    }
+    else if (date > 0)
+    {
+
         std::tm tm = {};
         std::istringstream iss((std::string)row[1]);
         iss >> std::get_time(&tm, "%d/%m/%Y");
@@ -35,23 +39,25 @@ void Graph::add_match(std::vector<std::string> row,int limit,int date)
         {
             throw std::runtime_error{"failed to parse time string"};
         }
-        
-        if(matchdate <= date){
+
+        if (matchdate <= date)
+        {
             auto home = this->add_team((std::string)row[2]);
             auto away = this->add_team((std::string)row[3]);
             if (row[4] != "-")
             {
-                auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]), (std::string)row[1], std::stoi(row[0]));
+                auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]),std::stoi(row[0]));
                 this->edges[home].push_back(m);
             }
         }
-
-    }else{
+    }
+    else
+    {
         auto home = this->add_team((std::string)row[2]);
         auto away = this->add_team((std::string)row[3]);
         if (row[4] != "-")
         {
-            auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]), (std::string)row[1], std::stoi(row[0]));
+            auto m = new Match(home, away, std::stoi(row[4]), std::stoi(row[5]),std::stoi(row[0]));
             this->edges[home].push_back(m);
         }
     }
@@ -63,7 +69,7 @@ Team *Graph::add_team(std::string title)
 
     if (it == this->teams.end())
     {
-        
+
         auto team = new Team(title, this->index++);
         this->teams.push_back(team);
         return team;
