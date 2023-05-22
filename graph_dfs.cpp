@@ -17,8 +17,13 @@ vector<Standing *> Graph::dfs()
     }
 
     stack<Match *> stack;
-
-    stack.push(this->getTeamMatches(this->getTeams()[0])[0]);
+    for (auto &i : this->getTeams()){
+    for(Match * m:this->getTeamMatches(i)){
+        if(!m->checked){
+            stack.push(m);
+        }
+    
+    // stack.push(this->getTeamMatches(this->getTeams()[0])[0]);
 
     while (!stack.empty())
     {
@@ -44,6 +49,8 @@ vector<Standing *> Graph::dfs()
                 }
             }
         }
+    }
+    }
     }
 
     return standings;
