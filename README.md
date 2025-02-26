@@ -27,9 +27,4 @@ Before you begin, ensure you have met the following requirements:
 - A code editor (VS Code, CLion, or any C++ IDE).
 - Git installed (if cloning from GitHub).
 
-### Installation
 
-1. Clone the repository:
-   ```sh
-   git clone <GITHUB_LINK>
-   cd premier-league-standing
